@@ -1,0 +1,5 @@
+/bakery-system-api
+/bakery-system-db
+/bakery-system-web
+
+.env

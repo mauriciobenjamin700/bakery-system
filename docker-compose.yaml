@@ -1,0 +1,57 @@
+volumes:
+  bakery-system-db-data:
+
+services:
+  bakery-system-db:
+    container_name: bakery-system-db
+    build: 
+      context: ./bakery-system-db/
+      dockerfile: Dockerfile
+      args:
+        DB_USER: ${DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
+        DB_NAME: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - bakery-system-db-data:/var/lib/postgresql/data
+      - ./bakery-system-db/backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  bakery-system-api:
+    container_name: bakery-system-api
+    build: 
+      context: ./bakery-system-api/
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - bakery-system-db
+
+  bakery-system-web:
+    container_name: bakery-system-web
+    build: 
+      context: ./bakery-system-web/
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - bakery-system-api
+
+  bakery-system-server:
+    container_name: bakery-system-server
+    build: 
+      context: server
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    depends_on:
+      - bakery-system-api
+      - bakery-system-web
