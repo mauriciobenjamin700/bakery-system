@@ -19,6 +19,9 @@ DB_HOST="bakery-system-db"
 DB_PORT="5432"
 DB_NAME="db"
 TEST_DB_URL="sqlite+aiosqlite:///:memory:"
+TOKEN_ALGORITHM="HS256"
+TOKEN_EXPIRES_IN_MINUTES=60
+TOKEN_SECRET_KEY="your_secret_key"
 ```
 
 Tenha o `docker` instalado em sua maquina
