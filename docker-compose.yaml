@@ -29,20 +29,22 @@ services:
     build: 
       context: ./bakery-system-api/
       dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
     env_file:
       - .env
     depends_on:
       - bakery-system-db
 
-  bakery-system-web:
-    container_name: bakery-system-web
-    build: 
-      context: ./bakery-system-web/
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    depends_on:
-      - bakery-system-api
+  # bakery-system-web:
+  #   container_name: bakery-system-web
+  #   build: 
+  #     context: ./bakery-system-web/
+  #     dockerfile: Dockerfile
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - bakery-system-api
 
   bakery-system-server:
     container_name: bakery-system-server
@@ -54,4 +56,4 @@ services:
       - .env
     depends_on:
       - bakery-system-api
-      - bakery-system-web
+      #- bakery-system-web

@@ -3,3 +3,5 @@
 /bakery-system-web
 
 .env
+
+*.pdf
